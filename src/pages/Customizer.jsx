@@ -8,7 +8,7 @@ import {download, logoShirt, stylishShirt} from '../assets';
 import {downloadCanvasToImage, reader} from '../config/config/helpers';
 import {EditorTabs, FilterTabs, DecalTypes} from '../config/config/constants';
 import {fadeAnimation, slideAnimation} from '../config/config/motion';
-import { AIPicker, ColorPicker, CustomButton, FilePicker, Tab } from '../components';
+import { ColorPicker, CustomButton, FilePicker, Tab } from '../components';
 
 const Customizer = () => {
   const snap = useSnapshot(state);
@@ -37,13 +37,7 @@ const Customizer = () => {
           setFile={setFile}
           readFile={readFile}
         />
-      case "aipicker":
-        return <AIPicker 
-          prompt={prompt}
-          setPrompt={setPrompt}
-          generatingImg={generatingImg}
-          handleSubmit={handleSubmit}
-        /> 
+      
       default:
         return null;
 
@@ -52,36 +46,7 @@ const Customizer = () => {
 
   }
 
-  const handleSubmit = async(type) => {
-    if(!prompt) return alert("Enter A Prompt You Idiot");
 
-    try {
-      setGeneratingImg(true);
-
-      const response = await fetch('http://localhost:8080/api/v1/dalle' , {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          prompt,
-        })
-      })
-
-      const data = await response.json();
-
-        
-      handleDecals(type, `data:image/png;base64,${data.photo}`)
-    } catch (error) {
-      alert(error)
-      console.error("Error making API call:", error);
-      alert("Error: " + (error.message || "Check the console for more details."));
-    
-    } finally{
-      setGeneratingImg(false)
-      setActiveEditorTab("")
-    }
-  }
   
   const handleDecals = (type, result) => {
     const decalType = DecalTypes[type];
@@ -150,6 +115,25 @@ const Customizer = () => {
               {generateTabContent()}
             </div>
           </div>
+         
+          <div className="customDecals">
+  <div className="decals w-30 h-30">
+    <div className="decals--container">
+      {snap.decals.map(([decal, color]) => (
+        <div 
+          key={decal} 
+          className="decal" 
+          onClick={() => {
+            state.logoDecal = decal;  // Set the logo decal
+            state.color = color;      // Update the shirt color
+          }}
+        >
+          <img src={decal} alt="brand" />
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
         </motion.div>
 
         <motion.div

@@ -91,3 +91,62 @@ input[type="file"] {
 .sketch-picker > div:nth-child(3) {
   display: none !important;
 }
+
+
+.color-options {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid white;
+  transition: transform 0.6s cubic-bezier(0.85, 0, 0.15, 1);
+}
+
+.circle:hover {
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+.decals {
+  position: absolute;
+  left: 50px;
+  bottom: 40px;
+}
+
+.decals p {
+  font-family: 'Inter var';
+  font-size: 0.7rem;
+  padding-bottom: 15px;
+}
+
+.decals img {
+  width: 24px;
+  filter: saturate(0) invert(1) brightness(5.5);
+  transition: all 0.2s ease-in-out;
+}
+
+.decals img:hover {
+  filter: none;
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+.decals--position {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  color: #00000056;
+  font-size: 0.6rem;
+  border: 1px solid #00000000;
+  padding: 10px 10px;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border 1s ease;
+}
+

@@ -5,58 +5,61 @@ import { useFrame } from '@react-three/fiber'
 import { Decal, useGLTF, useTexture } from '@react-three/drei'
 import state from '../store'
 
-const Tshirt = () => {
-    const snap = useSnapshot(state);
-    const {nodes, materials} = useGLTF('/tshirt.gltf')
+export default function Tshirt(props) {
+  const { nodes, materials } = useGLTF('/OTshirt.glb')
 
-    const logoTexture = useTexture(snap.logoDecal)
-    const fullTexture = useTexture(snap.fullDecal)
-    
-    useFrame((state,delta) => easing.dampC(materials.Material001.color, snap.color, 0.25, delta));
-    const stateString = JSON.stringify(snap);
+  const snap = useSnapshot(state);
+  const logoTexture = useTexture(snap.logoDecal)
+  const fullTexture = useTexture(snap.fullDecal)
+  
+  useFrame((state, delta) => {
+    if (materials['Material.001'] && materials['Material.001'].color) {
+      easing.dampC(materials['Material.001'].color, snap.color, 0.25, delta);
+    }
+  });
+  
+  const stateString = JSON.stringify(snap);
+  console.log('Logo Decal:', snap.logoDecal);
+console.log('Full Decal:', snap.fullDecal);
+console.log('Logo Texture:', logoTexture);
+console.log('Full Texture:', fullTexture);
+console.log(nodes);
 
-    materials.Material001.transparent = true;
-materials.Material001.opacity = 1.0;
-
-
-
+materials['Material.001'].transparent = true;
+materials['Material.001'].alphaTest = 0.5;
   return (
-    <group key={stateString} dispose={null} rotation={[-Math.PI / 2, 0, 0]} >
-          
-          <mesh 
-        castShadow
-        geometry={nodes.Object_2.geometry} material={materials.Material001}/>
-
-        <mesh 
-        
-        geometry={nodes.Object_3.geometry} material={materials.Material001} >
-        
-        
-        {snap.isFullTexture && (
-  <Decal
-  position={[0,0,0]}
-  rotation={[0,0,0]}
-  scale={1}
-  map={fullTexture}
-  />
-)}
-
-{snap.isLogoTexture && (
+    <group {...props} dispose={null}>
+    <group rotation={[-Math.PI / 2, 0, 0]}>
+    <mesh
+  geometry={nodes.Object_4.geometry}
+  material={materials['Material.001']}
+  position={[-0.008, -0.003, -0.006]}
+  rotation={[0.164, 0.016, 0.058]}
+>
+  {snap.isFullTexture && (
     <Decal
-  position={[0, 0, 0]}
-  rotation={[0, 0.9, 0]}
-  scale={0.8}
-  map={logoTexture}
-  depthTest={false}
-  depthWrite={true}
-  />
+      position={[0, -1.37, 0.1]} // Slightly forward and higher for chest placement
+      rotation={[0, 0, 0]}     // Ensure it's flat on the chest
+      scale={1}                // Scale to cover the entire chest
+      map={fullTexture}
+    />
   )}
-        </mesh>
-        <mesh geometry={nodes.Object_4.geometry} material={materials.Material001} />
-        <mesh geometry={nodes.Object_5.geometry} material={materials.Material001} />
+
+  {snap.isLogoTexture && (
+    <Decal
+      position={[0, 0, 0]} // Adjust for logo placement on the chest
+      rotation={[0, 0, 0]}      // Flat on the surface
+      scale={3}               // Smaller scale for a logo
+      map={logoTexture}
+      depthTest={true}
+      depthWrite={false}
+    />
+  )}
+</mesh>
+
     </group>
+  </group>
   )
 }
 
-
-export default Tshirt
+useGLTF.preload('/Tshirt.glb')
