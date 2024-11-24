@@ -1,6 +1,5 @@
 import {motion,AnimatePresence} from 'framer-motion';
 import {useSnapshot} from 'valtio';
-
 import state from '../store';
 import { CustomButton } from '../components';
 import {
@@ -20,9 +19,9 @@ const Home = () => {
         <motion.section className="home" {...slideAnimation('left')}>
           <motion.header {...slideAnimation("down")}>
             <img
-              src='./public/logos/VTLogo.png'
+              src='./shirtlogo.png'
               alt="logo"
-              className="w-12 h-12 object-contain" 
+              className="w-12 h-12object-contain" 
             
             />
           </motion.header>

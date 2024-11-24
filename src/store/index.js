@@ -16,6 +16,11 @@ const state = proxy({
         ['./chillguy.png','#FFFFFF'],
         ['./justdoit.png','#FFFFFF'],
         ['./daamn.png','#97303E'],
+        ['./travisscott.png', '#FFFFFF'],
+        ['./kb24.png','#480F79'], 
+        ['./jp3.png','#FFFFFF'],
+        ['./ja12.png','#FFFFFF'],
+        ['./daddychill.png','#97303E'],
         ['./scavengers.png','#FFFFFF']
     ],
 });

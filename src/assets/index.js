@@ -1,6 +1,6 @@
 import ai from "./ai.png";
-import fileIcon from "./file.png";
-import swatch from "./swatch.png";
+import fileIcon from "./file_folder.png";
+import swatch from "./art.png";
 import download from "./download.png";
 
 import logoShirt from "./logo-tshirt.png";
