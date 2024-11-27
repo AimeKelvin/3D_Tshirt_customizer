@@ -32,12 +32,12 @@ const Shirt = () => {
 
                 {snap.isLogoTexture && (
                     <Decal
-                        position={[0, 0, 0]}
+                        position={[0, -0.15, 0]}
                         rotation={[0, 0, 0]}
-                        scale={0.35}
+                        scale={0.39}
                         map={logoTexture}
-                        depthTest={false}
-                        depthWrite={true}
+                        depthTest={true}
+                        depthWrite={false}
                     />
                 )}
             </mesh>
